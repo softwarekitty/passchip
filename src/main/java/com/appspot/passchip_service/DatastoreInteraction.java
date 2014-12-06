@@ -19,6 +19,10 @@ import java.util.Date;
 import java.util.List;
 
 public class DatastoreInteraction {
+
+	/*
+	 * NOTICE: this is just here for reference.  The whole project will only use PasschipServlet.java
+	 */
 	
 	void insertGreeting(String guestbookname,String content)
 	{
