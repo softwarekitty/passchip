@@ -18,6 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class TestServlet extends HttpServlet {
+	
+
+	/*
+	 * NOTICE: this is just here for reference.  The whole project will only use PasschipServlet.java
+	 */
+	
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
