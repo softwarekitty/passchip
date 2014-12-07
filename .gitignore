@@ -8,3 +8,4 @@
 !*.java
 !web.xml
 !pom.xml
+!*.jar
