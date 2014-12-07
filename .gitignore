@@ -7,3 +7,4 @@
 !*.jsp
 !*.java
 !web.xml
+!pom.xml
