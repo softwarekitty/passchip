@@ -26,12 +26,7 @@
 <%-- we expect an ID in the post.  If no ID param exists, say so. --%>
 <%
     //IDBRANCH1 - null id
-    //deploy command: mvn appengine:update
-    String existingID1 = "160084DCA9";
-    String existingID2 = "1600837A5C";
-    List<String> existingIDList = new LinkedList();
-    existingIDList.add(existingID1);
-    //existingIDList.add(existingID2);
+  
     String id = request.getParameter("ID");
     if (id == null) {
 %>
@@ -46,68 +41,13 @@
 <%-- we have a valid ID value.  we should do the following things: --%>
 <%-- 1. try to find the community associated with the ID --%>
 <%
-    //IDBRANCH2 - existing id
-    }else if(existingIDList.contains(id)){
+    }else{
+    	System.out.println(id);
+    	RequestDispatcher rd = request.getRequestDispatcher("VerifyServlet");
+    	rd.forward(request,response);
+    	}
 %>
 
-<%-- 1.1 if we find it, then get the data for that user from that community sheet --%>
-<%-- and then offer the main user interface - simulated here by a refresh --%>
-<META http-equiv="refresh" content="0;URL=/userpage.jsp">
 
-
-<%-- 2. if there's no community associated with it, then maybe we are adding a new user or replacing lost chip --%>
-<%-- 2 now we certainly want provide community interface, but maybe it's not logged in --%>
-<%-- 2 so we branch depending on the user login status--%>
-<%-- //note that User, UserService, UserServiceFactory are from appengine.api --%>
-<%-- //we want to allow a logged-in admin not to need to login every time --%>
-<%
-    //IDBRANCH3 - id does not exist: offer community interfaces
-    }else {
-%>
-<%-- 2.1 user is already logged in--%>
-<%
-    UserService userService = UserServiceFactory.getUserService();
-    User user = userService.getCurrentUser();
-    //USERBRANCH1 - user is logged in
-    if (user != null) {
-        pageContext.setAttribute("user", user);
-%>
-<p>Hello, ${fn:escapeXml(user.nickname)} community.  (You can
-    <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
-    <p>or you can...<a href="#">Set up new user with id: <%=id%></a></p>
-    <p>or maybe you want to manage existing users:</p>
-    <table style="width:100%">
-      <tr>
-        <th>Username</th>
-        <th>Replace</th> 
-        <th>Delete</th>
-      </tr>
-      <tr>
-        <td>Jill</td>
-        <td>x</td> 
-        <td>x</td>
-      </tr>
-      <tr>
-        <td>Eve</td>
-        <td>x</td> 
-        <td>x</td>
-      </tr>
-    </table>
-<%
-    //USERBRANCH2 - user is not logged in
-    } else {
-%>
-<%-- 2.2 user is not logged in--%>
-<p>Hi there stranger.  Please  
-    <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-    to your community account. or <a href="#">Create New Community</a></p>
-<%-- this bracket closes the 'else' for if user!=null--%>
-<%
-    }
-%>
-<%-- this last bracket closes the 'else' for if id!=null--%>
-<%
-    }
-%>
 </body>
 </html>

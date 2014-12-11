@@ -4,7 +4,7 @@
 </head>
 <body>
 <p>use this form to get back to passchip with an ID number in post:</p>
-<form name="input" action='https://passchip-service.appspot.com' method="post">
+<form name="input" action='http://localhost:8080/passchip-service/' method="post">
 ID: <input type="text" name="ID">
 <input type="submit" value="Submit">
 </form>

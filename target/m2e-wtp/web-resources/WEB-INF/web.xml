@@ -18,6 +18,26 @@
         <servlet-name>idtest</servlet-name>
         <url-pattern>/idtest</url-pattern>
     </servlet-mapping>
+      <servlet>
+      <servlet-name>YalinServlet</servlet-name>
+      <servlet-class>passchip.server.YalinServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+      <servlet-name>YalinServlet</servlet-name>
+      <url-pattern>/passchip-service/Yalin</url-pattern>
+  </servlet-mapping>
+   <servlet>
+      <servlet-name>VerifyServlet</servlet-name>
+      <servlet-class>com.appspot.passchip_service.VerifyServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+      <servlet-name>VerifyServlet</servlet-name>
+      <url-pattern>/passchip-service/VerifyServlet</url-pattern>
+  </servlet-mapping>
+  
+  
 <welcome-file-list>
         <welcome-file>passchip.jsp</welcome-file>
         <welcome-file>postgen.jsp</welcome-file>
