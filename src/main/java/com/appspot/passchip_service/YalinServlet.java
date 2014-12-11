@@ -30,12 +30,15 @@ public class YalinServlet extends HttpServlet {
 			String password = req.getParameter("password");
 			if(s.equals("add")){
 				//addRow
+				System.out.println("add");
 			}
 			else if(s.equals("delete")){
 				//deleteRow
+				System.out.println("delete");
 			}
 			else if(s.equals("update")){
 				//updateRow
+				System.out.println("update");
 			}
 				
 		}
