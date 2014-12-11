@@ -20,10 +20,26 @@ public class YalinServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		String s = req.getParameter("user");
-		System.out.println("g: " + s + req.getAttribute("user"));
+		String s = req.getParameter("operation");
+		if(s== null || s == ""){
+			resp.setStatus(100);
+		}
+		else {
+			String website = req.getParameter("website");
+			String userName = req.getParameter("usr");
+			String password = req.getParameter("password");
+			if(s.equals("add")){
+				//addRow
+			}
+			else if(s.equals("delete")){
+				//deleteRow
+			}
+			else if(s.equals("update")){
+				//updateRow
+			}
+				
+		}
 		resp.setStatus(300);
 	}
-	
 	
 }
