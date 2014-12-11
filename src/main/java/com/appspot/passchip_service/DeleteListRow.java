@@ -16,7 +16,7 @@ public class DeleteListRow {
   public static void main(String[] args)
       throws AuthenticationException, MalformedURLException, IOException, ServiceException {
 
-	  SpreadsheetService service =   new SpreadsheetService("MySpreadsheetIntegration-v1");
+	  SpreadsheetService service =new SpreadsheetService("MySpreadsheetIntegration-v1");
 
       // TODO: Authorize the service object for a specific user (see other sections)
       String USERNAME = "passchip514@gmail.com";
