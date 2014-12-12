@@ -18,7 +18,7 @@ function saveRow(btn){
 		var website = testTbl.rows[rowIndex].cells[0].childNodes[0].value;
 		var usr = testTbl.rows[rowIndex].cells[1].childNodes[0].value;
 		var password = testTbl.rows[rowIndex].cells[2].childNodes[0].value;
-		//saveToSheet(website, usr, password, 'update');
+		sendRequest(website, usr, password, 'update', rowIndex);
 		testTbl.rows[rowIndex].cells[3].innerHTML='<input type="button" value="edit" onclick="editRow(this)">';
 		
 	}
@@ -30,12 +30,12 @@ function editRow(btn){
 	testTbl.rows[rowIndex].cells[3].innerHTML='<input type="button" value="save" onclick="saveRow(this)">';
 }
 
-function sendRequest(website, usr, password, operation){
+function sendRequest(website, usr, password, operation, index){
 	var abc = new XMLHttpRequest();
 	if (abc!=null)
 	  {
-	  var params = "website=" + website + "&usr=" + usr + "&password=" + password + "&operation=" + operation;
-	  abc.open("post","http://127.0.0.1:8888/passchip-service/Yalin",true);
+	  var params = "website=" + website + "&usr=" + usr + "&password=" + password + "&operation=" + operation + "&index=" + index;
+	  abc.open("post","passchip-service/Yalin",true);
 	  abc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		abc.setRequestHeader("Content-length", params.length);
 		abc.setRequestHeader("Connection", "close");
@@ -67,7 +67,7 @@ function removeRow(btn){
 	var website = testTbl.rows[rowIndex].cells[0].childNodes[0].value;
 	var usr = testTbl.rows[rowIndex].cells[1].childNodes[0].value;
 	var password = testTbl.rows[rowIndex].cells[2].childNodes[0].value;
-	//sendRequest(website, usr, password, 'delete');
+	sendRequest(website, usr, password, 'delete', rowIndex);
 	remove(btn);		
 }
 function login(btn){
@@ -85,7 +85,7 @@ function saveAddRow(btn){
 	var website = testTbl.rows[rowIndex].cells[0].childNodes[0].value;
 	var usr = testTbl.rows[rowIndex].cells[1].childNodes[0].value;
 	var password = testTbl.rows[rowIndex].cells[2].childNodes[0].value;
-	sendRequest(website, usr, password, 'add');
+	sendRequest(website, usr, password, 'add', rowIndex);
 	testTbl.rows[rowIndex].cells[0].innerHTML='<input type="text" value=' + website + '>';
 	testTbl.rows[rowIndex].cells[1].innerHTML='<input type="text" value=' + usr + '>';
 	testTbl.rows[rowIndex].cells[2].innerHTML='<input type="password" value=' + password + '>';
@@ -113,8 +113,9 @@ function addRow(){
 
 
 <body>
+<p><font size="20" color="red">The is a setting page, user add, delete, update and login supported website</font></p>
 
-<table id="table" border="10">
+<table id="table" border="10" align="center">
 	<tr>
 	
 		<td>website</td>
@@ -141,7 +142,7 @@ function addRow(){
 		<td><input type="button" value="login" onclick="login(this)"></td>
 	</tr>
 </table>
-<input type="button" value="add" onclick="addRow()">
+<p align="center"><input type="button" value="add" onclick="addRow()"></p>
 
 
 
