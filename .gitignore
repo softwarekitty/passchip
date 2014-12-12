@@ -10,3 +10,4 @@
 !pom.xml
 !appengine-web.xml
 !*.jar
+/target/

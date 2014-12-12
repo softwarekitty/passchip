@@ -19,7 +19,7 @@
 
     <servlet>
         <servlet-name>idtest</servlet-name>
-        <servlet-class>com.appspot.passchip_service.WorksheetIDGettingServlet.java</servlet-class>
+        <servlet-class>com.appspot.passchip_service.WorksheetIDGettingServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>idtest</servlet-name>
