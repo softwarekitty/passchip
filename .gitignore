@@ -6,8 +6,5 @@
 !.gitignore
 !*.jsp
 !*.java
-!web.xml
-!pom.xml
-!appengine-web.xml
-!*.jar
-/target/
+!/lib/*.jar
+!/WebContent/WEB-INF/web.xml
