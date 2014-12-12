@@ -12,8 +12,8 @@ public class YalinServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Creating new todo ");
-		resp.setHeader("yalin", "test");
+		resp.setContentType("text/html");
+		resp.getWriter().println("<html><head></head><body><p><h1>this is the YalinServlet</h1></p></body></html>");
 	}
 
 	@Override

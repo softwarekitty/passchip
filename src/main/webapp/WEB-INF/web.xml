@@ -2,44 +2,48 @@
 
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+    <welcome-file-list>
+        <welcome-file>passchip.jsp</welcome-file>    
+    </welcome-file-list>
+
+    
     <servlet>
         <servlet-name>passchip</servlet-name>
-        <servlet-class>net.passchip.www.PasschipServlet</servlet-class>
+        <servlet-class>com.appspot.passchip_service.PasschipServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>passchip</servlet-name>
         <url-pattern>/passchip</url-pattern>
     </servlet-mapping>
+
+
     <servlet>
         <servlet-name>idtest</servlet-name>
-        <servlet-class>net.passchip.www.WorksheetIDGettingServlet.java</servlet-class>
+        <servlet-class>com.appspot.passchip_service.WorksheetIDGettingServlet.java</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>idtest</servlet-name>
         <url-pattern>/idtest</url-pattern>
     </servlet-mapping>
-      <servlet>
-      <servlet-name>YalinServlet</servlet-name>
-      <servlet-class>passchip.server.YalinServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-      <servlet-name>YalinServlet</servlet-name>
-      <url-pattern>/passchip-service/Yalin</url-pattern>
-  </servlet-mapping>
-   <servlet>
-      <servlet-name>VerifyServlet</servlet-name>
-      <servlet-class>com.appspot.passchip_service.VerifyServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-      <servlet-name>VerifyServlet</servlet-name>
-      <url-pattern>/passchip-service/VerifyServlet</url-pattern>
-  </servlet-mapping>
-  
-  
-<welcome-file-list>
-        <welcome-file>passchip.jsp</welcome-file>
-        <welcome-file>postgen.jsp</welcome-file>
-    </welcome-file-list>
+
+    
+    <servlet>
+        <servlet-name>YalinServlet</servlet-name>
+        <servlet-class>com.appspot.passchip_service.YalinServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>YalinServlet</servlet-name>
+        <url-pattern>/Yalin</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>VerifyServlet</servlet-name>
+        <servlet-class>com.appspot.passchip_service.VerifyServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>VerifyServlet</servlet-name>
+        <url-pattern>/VerifyServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -8,4 +8,5 @@
 !*.java
 !web.xml
 !pom.xml
+!appengine-web.xml
 !*.jar
