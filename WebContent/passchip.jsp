@@ -5,7 +5,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.LinkedList" %>
 
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%-- for demo: northcrestdemo@gmail.com - passchip --%>
 <html>
 <head>
