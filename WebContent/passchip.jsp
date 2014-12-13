@@ -35,7 +35,7 @@
 <p>If you need help, please refer to the <a href="#">documentation</a></p>
 <p>Or you can use your paid-support credits to <a href="#">contact us</a></p>
 <p>...</p>
-<p>For Dev, we can go to a page that uses post. <button type="button" onclick=launch("passchip-service/postgen")>Go to Post Page</button></p>
+<p>For Dev, we can go to a page that uses post. <button type="button" onclick=launch("postgen")>Go to Post Page</button></p>
 
 <%-- we have a valid ID value.  we should do the following things: --%>
 <%-- 1. try to find the community associated with the ID --%>

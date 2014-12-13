@@ -3,7 +3,8 @@
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
     <welcome-file-list>
-        <welcome-file>passchip.jsp</welcome-file>    
+        <welcome-file>passchip.jsp</welcome-file> 
+        <welcome-file>postgen.jsp</welcome-file>   
     </welcome-file-list>
 
     
@@ -46,4 +47,11 @@
         <servlet-name>VerifyServlet</servlet-name>
         <url-pattern>/VerifyServlet</url-pattern>
     </servlet-mapping>
+    
+    <jsp-config>
+	  <jsp-property-group>
+	    <url-pattern>*.jsp</url-pattern>
+	    <trim-directive-whitespaces>true</trim-directive-whitespaces>
+	  </jsp-property-group>
+	</jsp-config>
 </web-app>
