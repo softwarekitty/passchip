@@ -108,7 +108,7 @@ function addRow(){
 	newTd2.innerHTML = '<input type="passwsord" id="password">';
 	newTd3.innerHTML = '<input type="button" value="done" onclick="saveAddRow(this)">';
 	newTd4.innerHTML = '<input type="button" value="cancel" onclick="cancelAddRow(this)">';
-	newTd5.innerHTML = '<input type="button" value="login" onclick="login(this)">';
+	newTd5.innerHTML = '<form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="northcrestUser"><input type="hidden" name="passw" value="testpassword"><input type="submit" value="Login"></form>';
 }
 </script>
 
@@ -132,7 +132,7 @@ function addRow(){
 		<td><input type="password" name="password" value="112"></td>
 		<td><input type="button" value="edit" onclick="editRow(this)"></td>
 		<td><input type="button" value="remove" onclick="removeRow(this)"></td>
-		<td><input type="button" value="login" onclick="login(this)"></td>
+		<td><form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="northcrestUser"><input type="hidden" name="passw" value="testpassword"><input type="submit" value="Login"></form></td>
 	</tr>
 	<tr>
 		<td><input type="text" name="website" value="twitter"></td>
@@ -140,7 +140,7 @@ function addRow(){
 		<td><input type="password" name="password" value="112"></td>
 		<td><input type="button" value="edit" onclick="editRow(this)"></td>
 		<td><input type="button" value="remove" onclick="removeRow(this)"></td>
-		<td><input type="button" value="login" onclick="login(this)"></td>
+		<td><form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="northcrestUser"><input type="hidden" name="passw" value="testpassword"><input type="submit" value="Login"></form></td>
 	</tr>
 </table>
 <p align="center"><input type="button" value="add" onclick="addRow()"></p>
