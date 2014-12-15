@@ -132,15 +132,15 @@ function addRow(){
 		<td><input type="password" name="password" value="112"></td>
 		<td><input type="button" value="edit" onclick="editRow(this)"></td>
 		<td><input type="button" value="remove" onclick="removeRow(this)"></td>
-		<td><form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="northcrestUser"><input type="hidden" name="passw" value="testpassword"><input type="submit" value="Login"></form></td>
+		<td><form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="keyalin"><input type="hidden" name="passw" value="112"><input type="submit" value="Login"></form></td>
 	</tr>
 	<tr>
 		<td><input type="text" name="website" value="twitter"></td>
 		<td><input type="text" name="usr" value="keyalin"></td>
-		<td><input type="password" name="password" value="112"></td>
+		<td><input type="password" name="password" value="223"></td>
 		<td><input type="button" value="edit" onclick="editRow(this)"></td>
 		<td><input type="button" value="remove" onclick="removeRow(this)"></td>
-		<td><form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="northcrestUser"><input type="hidden" name="passw" value="testpassword"><input type="submit" value="Login"></form></td>
+		<td><form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="keyalin"><input type="hidden" name="passw" value="223"><input type="submit" value="Login"></form></td>
 	</tr>
 </table>
 <p align="center"><input type="button" value="add" onclick="addRow()"></p>
