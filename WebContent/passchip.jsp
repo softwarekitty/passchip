@@ -42,7 +42,7 @@
 <%
     }else{
     	System.out.println(id);
-    	RequestDispatcher rd = request.getRequestDispatcher("VerifyServlet");
+    	RequestDispatcher rd = request.getRequestDispatcher("/VerifyServlet");
     	System.out.println("success creating request dispatcher");
     	rd.forward(request,response);
     	}

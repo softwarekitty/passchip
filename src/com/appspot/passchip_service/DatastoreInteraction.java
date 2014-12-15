@@ -24,30 +24,13 @@ public class DatastoreInteraction {
 	 * NOTICE: this is just here for reference.  The whole project will only use PasschipServlet.java
 	 */
 	
-	void insertGreeting(String guestbookname,String content)
-	{
-	
-    UserService userService = UserServiceFactory.getUserService();
-    User user = userService.getCurrentUser();
 
-    //String guestbookName = req.getParameter("guestbookName");
-    Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookname);
-    //String content = req.getParameter("content");
-    Date date = new Date();
-    Entity greeting = new Entity("Greeting", guestbookKey);
-    greeting.setProperty("user", user);
-    greeting.setProperty("date", date);
-    greeting.setProperty("content", content);
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(greeting);
-	}
 	
 	//can be used to setup a new community
 	//requires you to create a workbook in google sheets and supply the ID
 	//community name is some user supplied name eg:northcrest
 	//community ID auto generated-16 digits long
-	long createCommunity(String communityName, String uname, String pswd, String sheetsID)
+	public long createCommunity(String communityName, String uname, String pswd, String sheetsID)
 	{
 		Entity community=new Entity("Community");
 		community.setProperty("communityName", communityName);
@@ -63,7 +46,7 @@ public class DatastoreInteraction {
 	//to list all available communities 
 	//may be used to display the available communities when we setup a user
 	//so user can select which community to be added to	
-	List<Entity> getCommunities()
+	public List<Entity> getCommunities()
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Query query = new Query("Community");
@@ -73,7 +56,7 @@ public class DatastoreInteraction {
 	}
 	
 	//setup a new user
-	String createUser(String chipID,long communityID, String sheetID, int flag)
+	public String createUser(String chipID,long communityID, String sheetID, int flag)
 	{
 		Entity chipUser=new Entity("chipUser",chipID);
 		chipUser.setProperty("communityID", communityID);
@@ -86,7 +69,7 @@ public class DatastoreInteraction {
 	
 	//verify ID
 	//returns 1 if exists
-	int verifyUser(String chipID)
+	public int verifyUser(String chipID)
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Key k = KeyFactory.createKey("chipUser", chipID);
@@ -103,7 +86,7 @@ public class DatastoreInteraction {
 	
 	
 	//if entity exists returns entity else returns null
-	Entity getUser(String chipID)
+	public Entity getUser(String chipID)
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	    //Filter keyFilter = new FilterPredicate("chipID",FilterOperator.EQUAL,chipID);
@@ -118,6 +101,35 @@ public class DatastoreInteraction {
 			return null;
 		}
 		return result;
+	}
+	
+
+	public long getcommunityID(String communityname)
+	{
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    //Filter keyFilter = new FilterPredicate("chipID",FilterOperator.EQUAL,chipID);
+		//Query query =  new Query("Person").setFilter(keyFilter);
+		//Entity result = datastore.prepare(query).asSingleEntity();
+		Filter propertyFilter =
+				  new FilterPredicate("communityName",
+						  FilterOperator.EQUAL,
+				                      communityname);
+				Query q = new Query("Community").setFilter(propertyFilter);
+				try{
+				Entity result = datastore.prepare(q).asSingleEntity();
+				if(result!=null)
+				{
+					return result.getKey().getId();
+				}
+				else
+				{
+					return -1;
+				}
+				}
+				catch(Exception E)
+				{
+					return -1;
+				}
 	}
 	
 	//to change user parameters
