@@ -6,8 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.google.gdata.util.ServiceException;
+
 
 public class YalinServlet extends HttpServlet {
 	/**
@@ -39,19 +39,18 @@ public class YalinServlet extends HttpServlet {
 			System.out.println(index);
 			if(s.equals("add")){
 				AddListRow addlist = new AddListRow();
-				try {
-					addlist.addRow(website, userName, password);
-				} catch (ServiceException e) {
-					resp.setStatus(100);
-					e.printStackTrace();
-					return;
-				}
+					try {
+						addlist.addRow(website, userName, password);
+					} catch (ServiceException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
 			else if(s.equals("delete")){
 				DeleteListRow deleter = new DeleteListRow();
 				try {
 					deleter.delete(website, userName, password, index);
-				} catch (ServiceException e) {
+				} catch ( ServiceException e) {
 					resp.setStatus(100);
 					e.printStackTrace();
 					return;

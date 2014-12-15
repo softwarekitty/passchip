@@ -3,14 +3,21 @@ package com.appspot.passchip_service;
 
 
 
-import com.google.gdata.client.spreadsheet.*;
-import com.google.gdata.data.PlainTextConstruct;
-import com.google.gdata.data.spreadsheet.*;
-import com.google.gdata.util.*;
-
+//import com.google.gdata.client.spreadsheet.*;
 import java.io.IOException;
-import java.net.*;
-import java.util.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
+import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.spreadsheet.ListEntry;
+import com.google.gdata.data.spreadsheet.ListFeed;
+import com.google.gdata.data.spreadsheet.SpreadsheetEntry;
+import com.google.gdata.data.spreadsheet.SpreadsheetFeed;
+import com.google.gdata.data.spreadsheet.WorksheetEntry;
+import com.google.gdata.data.spreadsheet.WorksheetFeed;
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
 
 public class DeleteListRow {
 	
