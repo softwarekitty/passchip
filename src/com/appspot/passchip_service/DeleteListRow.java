@@ -48,13 +48,7 @@ public class DeleteListRow {
 	    // TODO: Choose a spreadsheet more intelligently based on your
 	    // app's needs.
 	    SpreadsheetEntry spreadsheet = spreadsheets.get(0);
-	    for(int i = 0; i < spreadsheets.size(); i++){
-	    	if(spreadsheets.get(i).getTitle().getPlainText().equals("test1")) {
-	    		spreadsheet = spreadsheets.get(i);
-	    		break;
-	    	}
-	    }
-	    //System.out.println(spreadsheet.getTitle().getPlainText());
+	    System.out.println(spreadsheet.getTitle().getPlainText());
 
 	    // Get the first worksheet of the first spreadsheet.
 	    // TODO: Choose a worksheet more intelligently based on your
