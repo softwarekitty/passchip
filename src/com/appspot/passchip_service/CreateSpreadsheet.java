@@ -1,20 +1,20 @@
 package com.appspot.passchip_service;
 
-import com.google.gdata.client.docs.DocsService;
-import com.google.gdata.client.spreadsheet.*;
-import com.google.gdata.data.Link;
-import com.google.gdata.data.PlainTextConstruct;
-import com.google.gdata.data.TextConstruct;
-import com.google.gdata.data.docs.DocumentListEntry;
-import com.google.gdata.data.docs.ExportFormat;
-import com.google.gdata.data.spreadsheet.*;
-import com.google.gdata.util.*;
-
 import java.io.IOException;
-import java.net.*;
-import java.util.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.xml.soap.Text;
+import com.google.gdata.client.docs.DocsService;
+import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.PlainTextConstruct;
+import com.google.gdata.data.docs.DocumentListEntry;
+import com.google.gdata.data.spreadsheet.SpreadsheetEntry;
+import com.google.gdata.data.spreadsheet.SpreadsheetFeed;
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
 
 public class CreateSpreadsheet {
 	 public static void main(String[] args)
@@ -66,11 +66,23 @@ public class CreateSpreadsheet {
          docsService.setUserCredentials(USERNAME, PASSWORD);
          URL GOOGLE_DRIVE_FEED_URL = new URL("https://docs.google.com/feeds/default/private/full/");
          DocumentListEntry documentListEntry = new com.google.gdata.data.docs.SpreadsheetEntry();
-         documentListEntry.setTitle(new PlainTextConstruct("Test1"));
+         documentListEntry.setTitle(new PlainTextConstruct("Test3"));
          documentListEntry = docsService.insert(GOOGLE_DRIVE_FEED_URL, documentListEntry);
          System.out.println("Create a new Spreadsheet successfully!");
+         String idPattern = "(.*)%(.*)";
+         Pattern p = Pattern.compile(idPattern);
+         System.out.println(p.toString());
+         Matcher m = p.matcher(documentListEntry.getId());
+         m.find();
+         System.out.println(m.toString());
+
          System.out.println(documentListEntry.getId());
-         
+         String id = m.group(2);
+         if(id.startsWith("3A")){
+        	 id = id.substring(2);
+         }
+         System.out.println(id);
+
          
      }
  }
