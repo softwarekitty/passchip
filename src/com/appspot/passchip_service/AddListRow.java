@@ -19,7 +19,7 @@ import com.google.gdata.util.ServiceException;
 
 public class AddListRow {
 	
-	public  void addRow(String website, String usr, String password) throws IOException, ServiceException{
+	public  void addRow(String website, String usr, String password, int index) throws IOException, ServiceException{
 		  SpreadsheetService service =   new SpreadsheetService("MySpreadsheetIntegration-v1");
 
 	      // TODO: Authorize the service object for a specific user (see other sections)

@@ -48,7 +48,13 @@ public class DeleteListRow {
 	    // TODO: Choose a spreadsheet more intelligently based on your
 	    // app's needs.
 	    SpreadsheetEntry spreadsheet = spreadsheets.get(0);
-	    System.out.println(spreadsheet.getTitle().getPlainText());
+	    for(int i = 0; i < spreadsheets.size(); i++){
+	    	if(spreadsheets.get(i).getTitle().getPlainText().equals("test1")) {
+	    		spreadsheet = spreadsheets.get(i);
+	    		break;
+	    	}
+	    }
+	    //System.out.println(spreadsheet.getTitle().getPlainText());
 
 	    // Get the first worksheet of the first spreadsheet.
 	    // TODO: Choose a worksheet more intelligently based on your
@@ -56,6 +62,7 @@ public class DeleteListRow {
 	    WorksheetFeed worksheetFeed = service.getFeed(
 	        spreadsheet.getWorksheetFeedUrl(), WorksheetFeed.class);
 	    List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
+	   // worksheetFeed.
 	    WorksheetEntry worksheet = worksheets.get(0);
 
 	    // Fetch the list feed of the worksheet.

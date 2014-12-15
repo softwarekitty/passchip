@@ -40,7 +40,7 @@ public class YalinServlet extends HttpServlet {
 			if(s.equals("add")){
 				AddListRow addlist = new AddListRow();
 					try {
-						addlist.addRow(website, userName, password);
+						addlist.addRow(website, userName, password,index);
 					} catch (ServiceException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

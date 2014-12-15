@@ -12,7 +12,6 @@
 
 
 
-
 function sendRequest(website, usr, password, operation, index){
 	var abc = new XMLHttpRequest();
 	if (abc!=null)
@@ -71,7 +70,7 @@ function removeRow(btn){
 }
 function login(btn){
 	
-	alert(<%request.getAttribute("chipID");%>);
+	alert(<%=request.getAttribute("chipID")%>);
 }
 
 function cancelAddRow(btn){
