@@ -30,6 +30,7 @@ request.setAttribute("name",name );
         <option><c:out value="${line}"/></option>
     </c:forEach>
  </select>
+ <input type="hidden" name="ID" value="<%=chipID%>">
  <input type="submit" value="Submit">
 </form>
 <a href="/setupcommunity.jsp" >Setup Community</a>

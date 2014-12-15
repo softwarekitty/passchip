@@ -34,10 +34,10 @@ public class SetupUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DatastoreInteraction d= new DatastoreInteraction();
-		//System.out.println(request.getParameter("community"));
+		System.out.println(request.getParameter("ID"));
 		String communityname=request.getParameter("community");
-		
-		//Long communityID=new Long("6122080743456768");
+		System.out.println(request.getParameter("community"));
+		System.out.println(d.getcommunityID(communityname));
 		
 		
 		d.createUser(request.getParameter("ID"),d.getcommunityID(communityname) , "testsheetid" , 1);
