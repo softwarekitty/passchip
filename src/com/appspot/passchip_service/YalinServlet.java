@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gdata.util.ServiceException;
 
 public class YalinServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2489251434031281467L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
