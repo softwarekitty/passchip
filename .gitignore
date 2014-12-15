@@ -6,6 +6,6 @@
 !.gitignore
 !*.jsp
 !*.java
-!web.xml
-!pom.xml
-!*.jar
+!/lib/*.jar
+!/WebContent/WEB-INF/lib/*.jar
+!/WebContent/WEB-INF/web.xml
