@@ -79,19 +79,26 @@ function cancelAddRow(btn){
 		remove(btn);
 	}
 }
+var jsp;
 function saveAddRow(btn){
 	var rowIndex=btn.parentNode.parentNode.rowIndex;
 	var testTbl =  document.getElementById("table");
 	var website = testTbl.rows[rowIndex].cells[0].childNodes[0].value;
 	var usr = testTbl.rows[rowIndex].cells[1].childNodes[0].value;
 	var password = testTbl.rows[rowIndex].cells[2].childNodes[0].value;
+	if(website == "skype"){
+		jsp = "/skypelogin.jsp";
+	}
+	else if(website == "disqus"){
+		jsp = "/disquslogin.jsp";
+	}
 	sendRequest(website, usr, password, 'add', rowIndex);
 	testTbl.rows[rowIndex].cells[0].innerHTML='<input type="text" value=' + website + '>';
 	testTbl.rows[rowIndex].cells[1].innerHTML='<input type="text" value=' + usr + '>';
 	testTbl.rows[rowIndex].cells[2].innerHTML='<input type="password" value=' + password + '>';
 	testTbl.rows[rowIndex].cells[3].innerHTML='<input type="button" value="edit" onclick="editRow(this)">';
 	testTbl.rows[rowIndex].cells[4].innerHTML='<input type="button" value="remove" onclick="removeRow(this)">';
-	testTbl.rows[rowIndex].cells[5].innerHTML='<form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="' + usr + '"><input type="hidden" name="passw" value="' + password + '"><input type="submit" value="Login"></form>';
+	testTbl.rows[rowIndex].cells[5].innerHTML='<form name="input" action="'+ jsp + '" method="post" target="_blank"><input type="hidden" name="uname" value="' + usr + '"><input type="hidden" name="passw" value="' + password + '"><input type="submit" value="Login"></form>';
 }
 function addRow(){
 	var testTbl =  document.getElementById("table");
@@ -103,7 +110,7 @@ function addRow(){
 	var newTd4 = newTr.insertCell(4);
 	var newTd5 = newTr.insertCell(5);
 	
-	newTd0.innerHTML = '<select>	  <option value ="volvo">Volvo</option>	  <option value="audi">Audi</option>	</select>';
+	newTd0.innerHTML = '<select>	  <option value ="skype">skype</option>	  <option value="disqus">disque</option>	</select>';
 	newTd1.innerHTML = '<input type="text" id="usr">';
 	newTd2.innerHTML = '<input type="passwsord" id="password">';
 	newTd3.innerHTML = '<input type="button" value="done" onclick="saveAddRow(this)">';
@@ -125,22 +132,6 @@ function addRow(){
 		<td>update info</td>
 		<td>remove website</td>
 		<td>click to login</td>
-	</tr>
-	<tr>
-		<td><input type="text" name="website" value="facebook"></td>
-		<td><input type="text" name="usr" value="keyalin" ></td>
-		<td><input type="password" name="password" value="112"></td>
-		<td><input type="button" value="edit" onclick="editRow(this)"></td>
-		<td><input type="button" value="remove" onclick="removeRow(this)"></td>
-		<td><form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="keyalin"><input type="hidden" name="passw" value="112"><input type="submit" value="Login"></form></td>
-	</tr>
-	<tr>
-		<td><input type="text" name="website" value="twitter"></td>
-		<td><input type="text" name="usr" value="keyalin"></td>
-		<td><input type="password" name="password" value="223"></td>
-		<td><input type="button" value="edit" onclick="editRow(this)"></td>
-		<td><input type="button" value="remove" onclick="removeRow(this)"></td>
-		<td><form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="keyalin"><input type="hidden" name="passw" value="223"><input type="submit" value="Login"></form></td>
 	</tr>
 </table>
 <p align="center"><input type="button" value="add" onclick="addRow()"></p>
