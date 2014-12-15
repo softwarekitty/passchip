@@ -66,7 +66,7 @@ public class CreateSpreadsheet {
          docsService.setUserCredentials(USERNAME, PASSWORD);
          URL GOOGLE_DRIVE_FEED_URL = new URL("https://docs.google.com/feeds/default/private/full/");
          DocumentListEntry documentListEntry = new com.google.gdata.data.docs.SpreadsheetEntry();
-         documentListEntry.setTitle(new PlainTextConstruct("Test3"));
+         documentListEntry.setTitle(new PlainTextConstruct("Test5"));
          documentListEntry = docsService.insert(GOOGLE_DRIVE_FEED_URL, documentListEntry);
          System.out.println("Create a new Spreadsheet successfully!");
          String idPattern = "(.*)%(.*)";

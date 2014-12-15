@@ -5,7 +5,8 @@
 <script>
 
 
-
+//<request>, 获得sheetiD, username, password
+// getSheetInfo(sheetId, username, password)
 
 
 
@@ -90,7 +91,7 @@ function saveAddRow(btn){
 	testTbl.rows[rowIndex].cells[2].innerHTML='<input type="password" value=' + password + '>';
 	testTbl.rows[rowIndex].cells[3].innerHTML='<input type="button" value="edit" onclick="editRow(this)">';
 	testTbl.rows[rowIndex].cells[4].innerHTML='<input type="button" value="remove" onclick="removeRow(this)">';
-	testTbl.rows[rowIndex].cells[5].innerHTML='<input type="button" value="login" onclick="login(this)">';
+	testTbl.rows[rowIndex].cells[5].innerHTML='<form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="' + usr + '"><input type="hidden" name="passw" value="' + password + '"><input type="submit" value="Login"></form>';
 }
 function addRow(){
 	var testTbl =  document.getElementById("table");
@@ -107,7 +108,7 @@ function addRow(){
 	newTd2.innerHTML = '<input type="passwsord" id="password">';
 	newTd3.innerHTML = '<input type="button" value="done" onclick="saveAddRow(this)">';
 	newTd4.innerHTML = '<input type="button" value="cancel" onclick="cancelAddRow(this)">';
-	newTd5.innerHTML = '<form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="northcrestUser"><input type="hidden" name="passw" value="testpassword"><input type="submit" value="Login"></form>';
+	//newTd5.innerHTML = '<form name="input" action="/disquslogin.jsp" method="post" target="_blank"><input type="hidden" name="uname" value="northcrestUser"><input type="hidden" name="passw" value="testpassword"><input type="submit" value="Login"></form>';
 }
 </script>
 
