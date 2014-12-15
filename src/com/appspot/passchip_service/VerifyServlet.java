@@ -62,7 +62,7 @@ public class VerifyServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			request.setAttribute("chipID",chipID);
-			RequestDispatcher rd = request.getRequestDispatcher("/userpage.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/ui.jsp");
 	    	rd.forward(request,response);
 			
 		}

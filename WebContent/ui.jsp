@@ -70,7 +70,8 @@ function removeRow(btn){
 	remove(btn);		
 }
 function login(btn){
-	alert("");
+	
+	alert(<%request.getAttribute("chipID");%>);
 }
 
 function cancelAddRow(btn){
