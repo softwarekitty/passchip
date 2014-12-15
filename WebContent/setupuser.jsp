@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Setup user</title>
 </head>
 <body>
 <%String chipID=request.getParameter("ID"); 
@@ -23,7 +23,9 @@ for(int i=0;i<result.size();i++)
 }
 request.setAttribute("name",name );
 %>
-<p> Setting up user for the Chip <%=chipID %> Select a community</p>
+<p> Setting up user for the Chip ID <%=chipID %></p>
+
+<p> Select a community from the list or setup a new community using the link <a href="/setupcommunity.jsp" >Setup Community</a> </p>
 <form action="/SetupUser" method="post">
  <select name="community">
     <c:forEach var="line" items="${name}">
@@ -33,7 +35,7 @@ request.setAttribute("name",name );
  <input type="hidden" name="ID" value="<%=chipID%>">
  <input type="submit" value="Submit">
 </form>
-<a href="/setupcommunity.jsp" >Setup Community</a>
+
 
 </body>
 </html>

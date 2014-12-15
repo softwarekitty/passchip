@@ -71,7 +71,7 @@ function removeRow(btn){
 }
 function login(btn){
 	
-	alert(<%request.getAttribute("chipID");%>);
+	alert(<%=request.getAttribute("chipID")%>);
 }
 
 function cancelAddRow(btn){
