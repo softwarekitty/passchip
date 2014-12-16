@@ -1,6 +1,9 @@
 package com.appspot.passchip_service;
 
 import com.google.common.collect.Maps;
+import com.google.gdata.data.docs.DocumentListEntry;
+import com.google.gdata.data.media.MediaEntry;
+import com.google.gdata.data.extensions.QuotaBytesTotal;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
