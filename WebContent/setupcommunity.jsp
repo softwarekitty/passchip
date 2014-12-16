@@ -10,8 +10,8 @@
 <h1>Setup Community</h1>
 <form name="setup" action="/SetupCommunity" method="post" >
 Community Name <input type="text"  name="communityname">
-User Name<input type="text" name="username">
-Password<input type="password" name="pswd">
+User Name<input type="text" name="username" value="passchip514@gmail.com">
+Password<input type="password" name="pswd" value="gocyclone">
 <input type="submit" value="Submit">
 </form>
 </body>

@@ -56,6 +56,7 @@ public class VerifyServlet extends HttpServlet {
 				request.setAttribute("bookID",result.getProperty("sheetsID"));
 				request.setAttribute("username",result.getProperty("username"));
 				request.setAttribute("password",result.getProperty("password"));
+				System.out.println("printing the book id generated"+result.getProperty("sheetsID"));
 				
 			} catch (EntityNotFoundException e) {
 				// TODO Auto-generated catch block
