@@ -1,6 +1,8 @@
 package com.appspot.passchip_service;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +16,14 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.PlainTextConstruct;
+import com.google.gdata.data.spreadsheet.SpreadsheetEntry;
+import com.google.gdata.data.spreadsheet.SpreadsheetFeed;
+import com.google.gdata.data.spreadsheet.WorksheetEntry;
+import com.google.gdata.data.spreadsheet.WorksheetFeed;
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
 
 /**
  * Servlet implementation class SetupUser
@@ -46,27 +56,90 @@ public class SetupUser extends HttpServlet {
 		String communityname=request.getParameter("community");
 		System.out.println(request.getParameter("community"));
 		System.out.println(d.getcommunityID(communityname));
+		String key;
+		String username;
+		String pswd;
+		String usersheetID=new String();
 		
-		
-		d.createUser(request.getParameter("ID"),d.getcommunityID(communityname) , "testsheetid" , 1);
-		request.setAttribute("sheetID",d.getUser(request.getParameter("ID")).getProperty("sheetID"));
-		Long l = new Long(d.getUser(request.getParameter("ID")).getProperty("communityID").toString());
+		//Long l = new Long(d.getUser(request.getParameter("ID")).getProperty("communityID").toString());
+		Long l= new Long(d.getcommunityID(communityname));
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Key k = KeyFactory.createKey("Community",l);
 		Entity result;
 		try {
 			result = datastore.get(k);
 			request.setAttribute("bookID",result.getProperty("sheetsID"));
+			key=(String) result.getProperty("sheetsID");
 			request.setAttribute("username",result.getProperty("username"));
-			request.setAttribute("password",result.getProperty("password"));
 			
-		} catch (EntityNotFoundException e) {
+			
+			username=(String) result.getProperty("username");
+			request.setAttribute("password",result.getProperty("password"));
+			pswd=(String) result.getProperty("password");
+			System.out.println(username);
+			System.out.println(pswd);
+			
+		
+		//code for sheets creation
+		SpreadsheetService spreadsheetService = new SpreadsheetService("passchip-service");
+		spreadsheetService.setUserCredentials(username,pswd);
+		//String key = "1FnDRWz4CjUJwatYG6gn7P_5hQH__pVqEDpvLub4gJ6M";
+		SpreadsheetEntry spreadsheet = getSpreadsheetWithKey(key,
+				spreadsheetService);
+		request.setAttribute("chipID",request.getParameter("ID"));
+		String chipID=request.getParameter("ID");
+		 WorksheetEntry newWorksheet = new WorksheetEntry();
+			newWorksheet.setTitle(new PlainTextConstruct(chipID));
+			newWorksheet.setColCount(3);
+			newWorksheet.setRowCount(20);	
+			
+			URL worksheetFeedUrl = spreadsheet.getWorksheetFeedUrl();
+			spreadsheetService.insert(worksheetFeedUrl, newWorksheet);
+		
+			WorksheetFeed worksheetFeed = spreadsheetService.getFeed(
+				 spreadsheet.getWorksheetFeedUrl(), WorksheetFeed.class);
+			List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
+			for (WorksheetEntry worksheet : worksheets) {
+				
+				String sm = worksheet.getTitle().getPlainText();
+				if (sm.toString().equals(chipID)){
+					System.out.println("ID: " + worksheet.getId());
+					usersheetID=worksheet.getId();
+				}
+			}				
+
+			//
+
+
+		d.createUser(request.getParameter("ID"),d.getcommunityID(communityname) , usersheetID , 1);
+		request.setAttribute("sheetID",d.getUser(request.getParameter("ID")).getProperty("sheetID"));
+		System.out.println("printing user sheet id after creation:"+d.getUser(request.getParameter("ID")).getProperty("sheetID"));
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/ui.jsp");
+    	rd.forward(request,response);
+		} catch (EntityNotFoundException | ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		request.setAttribute("chipID",request.getParameter("ID"));
-		RequestDispatcher rd = request.getRequestDispatcher("/ui.jsp");
-    	rd.forward(request,response);
+	}
+	private static SpreadsheetEntry getSpreadsheetWithKey(String key,
+			SpreadsheetService spreadsheetService) throws IOException,
+			ServiceException {
+		URL metafeedUrl = new URL(
+				"http://spreadsheets.google.com/feeds/spreadsheets/private/full");
+		SpreadsheetFeed spreadsheetFeed = spreadsheetService.getFeed(
+				metafeedUrl, SpreadsheetFeed.class);
+
+		List<SpreadsheetEntry> spreadsheets = spreadsheetFeed.getEntries();
+		for (SpreadsheetEntry spreadsheet : spreadsheets) {
+			System.out.println("found spreadsheet with key: "
+					+ spreadsheet.getKey());
+			if (spreadsheet.getKey().equals(key)) {
+				return spreadsheet;
+			}
+		}
+		throw new IllegalStateException(
+				"You don't have access to a spreadsheet with key " + key);
 	}
 
 }

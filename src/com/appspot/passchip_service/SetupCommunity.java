@@ -74,6 +74,8 @@ public class SetupCommunity extends HttpServlet {
         }
         System.out.println(id);
 		System.out.println(d.createCommunity(communityname,username, pswd, id));
+		//request.setAttribute("ID",request.getAttribute("ID"));
+		System.out.println("setupcommunity.java"+request.getParameter("ID"));
 		RequestDispatcher rd = request.getRequestDispatcher("/setupuser.jsp");
     	
     	rd.forward(request,response);
