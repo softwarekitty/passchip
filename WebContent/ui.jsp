@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page import="com.appspot.passchip_service.WorkSheetContent" %>
+<%@ page import="com.appspot.passchip_service.UserEntry" %>
+<%@ page import="java.util.List" %>
 
 <html>
 
@@ -8,6 +11,7 @@
 //<request>, 获得sheetiD, username, password
 // getSheetInfo(sheetId, username, password)
 
+	<%List<UserEntry> list = WorkSheetContent.getSheetContent("a");%>
 
 
 
@@ -101,6 +105,7 @@ function saveAddRow(btn){
 	testTbl.rows[rowIndex].cells[5].innerHTML='<form name="input" action="'+ jsp + '" method="post" target="_blank"><input type="hidden" name="uname" value="' + usr + '"><input type="hidden" name="passw" value="' + password + '"><input type="submit" value="Login"></form>';
 }
 function addRow(){
+	alert(<%=list.get(0).website%>);
 	var testTbl =  document.getElementById("table");
 	var newTr = testTbl.insertRow(testTbl.rows.length);
 	var newTd0 = newTr.insertCell(0);
@@ -121,6 +126,7 @@ function addRow(){
 
 
 <body>
+<background>
 <p><font size="20" color="red">The is a setting page, user add, delete, update and login supported website</font></p>
 
 <table id="table" border="10" align="center">
@@ -133,7 +139,13 @@ function addRow(){
 		<td>remove website</td>
 		<td>click to login</td>
 	</tr>
+
 </table>
+	<script>
+
+	//addRow();
+	</script>
+
 <p align="center"><input type="button" value="add" onclick="addRow()"></p>
 
 
