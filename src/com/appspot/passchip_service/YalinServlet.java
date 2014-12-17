@@ -56,6 +56,12 @@ public class YalinServlet extends HttpServlet {
 			resp.setStatus(100);
 		}
 		else {
+			String SHEETID = req.getParameter("SHEETID");
+			String BOOKID = req.getParameter("BOOKID");
+			String sheetUserName  = req.getParameter("USERNAME");
+			String sheetPassword = req.getParameter("PASSWORD");
+			System.out.println(SHEETID + BOOKID + sheetUserName + sheetPassword);
+			
 			String website = req.getParameter("website");
 			String userName = req.getParameter("usr");
 			String password = req.getParameter("password");
@@ -64,7 +70,7 @@ public class YalinServlet extends HttpServlet {
 			if(s.equals("add")){
 				AddListRow addlist = new AddListRow();
 					try {
-						addlist.addRow(website, userName, password,index);
+						addlist.addRow(BOOKID, SHEETID, sheetUserName, sheetPassword, website, userName, password,index);
 					} catch (ServiceException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -73,7 +79,7 @@ public class YalinServlet extends HttpServlet {
 			else if(s.equals("delete")){
 				DeleteListRow deleter = new DeleteListRow();
 				try {
-					deleter.delete(website, userName, password, index);
+					deleter.delete(BOOKID, SHEETID, sheetUserName, sheetPassword, website, userName, password, index);
 				} catch ( ServiceException e) {
 					resp.setStatus(100);
 					e.printStackTrace();
@@ -85,7 +91,7 @@ public class YalinServlet extends HttpServlet {
 			
 				UpdateListRow update = new UpdateListRow();
 				try {
-					update.update(website, userName, password, index);
+					update.update(BOOKID, SHEETID, sheetUserName, sheetPassword, website, userName, password, index);
 				} catch (ServiceException e) {
 					resp.setStatus(100);
 					e.printStackTrace();

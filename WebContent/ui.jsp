@@ -11,17 +11,25 @@
 //<request>, 获得sheetiD, username, password
 // getSheetInfo(sheetId, username, password)
 
-	<%List<UserEntry> list = WorkSheetContent.getSheetContent("a");%>
+	
 
 
 
 
 
 function sendRequest(website, usr, password, operation, index){
+	var BOOKID =  document.getElementById("BOOKID").value;
+	var SHEETID = document.getElementById("SHEETID").value;
+	var USERNAME = document.getElementById("USERNAME").value;
+	var PASSWORD = document.getElementById("PASSWORD").value;
+	/* String sheetId = request.getAttribute("sheetID").toString();
+	String username = request.getAttribute("username").toString();
+	String pass = request.getAttribute("password").toString(); */
 	var abc = new XMLHttpRequest();
 	if (abc!=null)
 	  {
 	  var params = "website=" + website + "&usr=" + usr + "&password=" + password + "&operation=" + operation + "&index=" + index;
+	  params = params + "&BOOKID=" + BOOKID + "&SHEETID=" + SHEETID + "&USERNAME=" + USERNAME + "&PASSWORD=" + PASSWORD; 
 	  abc.open("post","Yalin",true);
 	  abc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		abc.setRequestHeader("Content-length", params.length);
@@ -105,7 +113,7 @@ function saveAddRow(btn){
 	testTbl.rows[rowIndex].cells[5].innerHTML='<form name="input" action="'+ jsp + '" method="post" target="_blank"><input type="hidden" name="uname" value="' + usr + '"><input type="hidden" name="passw" value="' + password + '"><input type="submit" value="Login"></form>';
 }
 function addRow(){
-	alert(<%=list.get(0).website%>);
+	
 	var testTbl =  document.getElementById("table");
 	var newTr = testTbl.insertRow(testTbl.rows.length);
 	var newTd0 = newTr.insertCell(0);
@@ -126,23 +134,59 @@ function addRow(){
 
 
 <body>
-<background>
 <p><font size="20" color="red">The is a setting page, user add, delete, update and login supported website</font></p>
 
 <table id="table" border="10" align="center">
 	<tr>
-	
 		<td>website</td>
 		<td>usr</td>
 		<td>password</td>
 		<td>update info</td>
 		<td>remove website</td>
 		<td>click to login</td>
+
 	</tr>
+	<%
+		String bookId = request.getAttribute("bookID").toString();
+		String sheetId = request.getAttribute("sheetID").toString();
+		String username = request.getAttribute("username").toString();
+		String pass = request.getAttribute("password").toString();
+		String USERNAME = "passchip514@gmail.com";
+		String PASSWORD = "gocyclone";
+		String bookID = "1FnDRWz4CjUJwatYG6gn7P_5hQH__pVqEDpvLub4gJ6M";
+		String sheetID = "https://spreadsheets.google.com/feeds/worksheets/1FnDRWz4CjUJwatYG6gn7P_5hQH__pVqEDpvLub4gJ6M/od0sh5t";
+		List<UserEntry> list = WorkSheetContent.getSheetContent(USERNAME, PASSWORD, bookID, sheetID);
+		String html = "";
+		for(int i = 0; i < list.size(); i++){
+			html += "<tr>";
+			String website = list.get(i).website;
+			String usr = list.get(i).usr;
+			String password = list.get(i).password;
+			
+			html += "<td><input type=\"text\" value=" + website + "></td>";
+			html += "<td><input type=\"text\" value=" + usr + "></td>";
+			html += "<td><input type=\"password\" value=" + password + "></td>";
+			html += "<td><input type=\"button\" value=\"edit\" onclick=\"editRow(this)\"></td>";
+			html += "<td><input type=\"button\" value=\"remove\" onclick=\"removeRow(this)\"></td>";
+ 			String js = "";
+			if(website .equals("skype") ){
+				js = "/skypelogin.jsp";
+			}
+			else if(website.equals("disqus") ){
+				js = "/disquslogin.jsp";
+			}
+			html+="<td><form name=\"input\" action=\""+ js + "\" method=\"post\" target=\"_blank\"><input type=\"hidden\" name=\"uname\" value=\"" + usr + "\"><input type=\"hidden\" name=\"passw\" value=\"" + password + "\"><input type=\"submit\" value=\"Login\"></form></td>";			
+			html += "</tr>";
+		}
+	%>
+	<%=html %>
 
 </table>
+	<input type="hidden" id="BOOKID" value=<%=bookID %>>
+	<input type="hidden" id="SHEETID" value=<%=sheetID %>>
+	<input type="hidden" id="USERNAME" value=<%=USERNAME %>>
+	<input type="hidden" id="PASSWORD" value=<%=PASSWORD %>>
 	<script>
-
 	//addRow();
 	</script>
 

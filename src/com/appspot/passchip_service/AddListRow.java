@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.List;
 
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.spreadsheet.CellFeed;
 import com.google.gdata.data.spreadsheet.ListEntry;
 import com.google.gdata.data.spreadsheet.ListFeed;
 import com.google.gdata.data.spreadsheet.SpreadsheetEntry;
@@ -21,47 +22,27 @@ import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
 public class AddListRow {
+	private static final String APP_NAME = "passchip-service";
 	
-	public  void addRow(String website, String usr, String password, int index) throws IOException, ServiceException{
-		  SpreadsheetService service =   new SpreadsheetService("MySpreadsheetIntegration-v1");
+	public  void addRow(String bookId, String sheetId, String USERNAME, String PASSWORD, String website, String usr, String password, int index) throws IOException, ServiceException{
 
-	      // TODO: Authorize the service object for a specific user (see other sections)
-	      String USERNAME = "passchip514@gmail.com";
-	      String PASSWORD = "gocyclone";
 
-	      service.setUserCredentials(USERNAME, PASSWORD);
+			SpreadsheetService spreadsheetService = new SpreadsheetService(APP_NAME);
+			spreadsheetService.setUserCredentials(USERNAME, PASSWORD);
+			SpreadsheetEntry spreadsheet = getBookWithID(bookId, spreadsheetService);
 
-	    // TODO: Authorize the service object for a specific user (see other sections)
+			WorksheetFeed worksheetFeed = spreadsheetService.getFeed(
+					spreadsheet.getWorksheetFeedUrl(), WorksheetFeed.class);
 
-	    // Define the URL to request.  This should never change.
-	    URL SPREADSHEET_FEED_URL = new URL(
-	        "https://spreadsheets.google.com/feeds/spreadsheets/private/full");
+			WorksheetEntry worksheet = getSheetWithID(sheetId, worksheetFeed);
 
-	    // Make a request to the API and get all spreadsheets.
-	    SpreadsheetFeed feed = service.getFeed(SPREADSHEET_FEED_URL,
-	        SpreadsheetFeed.class);
-	    List<SpreadsheetEntry> spreadsheets = feed.getEntries();
+			URL cellFeedUrl = worksheet.getCellFeedUrl();
+			CellFeed cellFeed = spreadsheetService.getFeed(cellFeedUrl,
+					CellFeed.class);
 
-	    if (spreadsheets.size() == 0) {
-	      // TODO: There were no spreadsheets, act accordingly.
-	    }
-
-	    // TODO: Choose a spreadsheet more intelligently based on your
-	    // app's needs.
-	    SpreadsheetEntry spreadsheet = spreadsheets.get(0);
-	    System.out.println(spreadsheet.getTitle().getPlainText());
-
-	    // Get the first worksheet of the first spreadsheet.
-	    // TODO: Choose a worksheet more intelligently based on your
-	    // app's needs.
-	    WorksheetFeed worksheetFeed = service.getFeed(
-	        spreadsheet.getWorksheetFeedUrl(), WorksheetFeed.class);
-	    List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
-	    WorksheetEntry worksheet = worksheets.get(0);
-
-	    // Fetch the list feed of the worksheet.
-	    URL listFeedUrl = worksheet.getListFeedUrl();
-	    ListFeed listFeed = service.getFeed(listFeedUrl, ListFeed.class);
+			 // Create a local representation of the new row.
+			URL listFeedUrl = worksheet.getListFeedUrl();
+		    ListFeed listFeed = spreadsheetService.getFeed(listFeedUrl, ListFeed.class);
 
 	    // Create a local representation of the new row.
 	    ListEntry row = new ListEntry();
@@ -73,64 +54,54 @@ public class AddListRow {
 	   
 
 	    // Send the new row to the API for insertion.
-	    row = service.insert(listFeedUrl, row);
+	    row = spreadsheetService.insert(listFeedUrl, row);
 	}
-  public static void main(String[] args)
-      throws AuthenticationException, MalformedURLException, IOException, ServiceException {
-	  
-	  //addRow("a", "b", "c");
+	/**
+	 * Returns the Sheet with the given key.
+	 *
+	 * @throws IOException
+	 *             If a network error occurs while trying to communicate with
+	 *             Spreadsheets
+	 * @throws ServiceException
+	 *             If an application-level protocol error occurs while trying to
+	 *             communicate with Spreadsheets
+	 */
+	private static WorksheetEntry getSheetWithID(String sheetID,
+			WorksheetFeed worksheetFeed) throws IOException, ServiceException {
+		List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
+		for (WorksheetEntry worksheet : worksheets) {
+			if (worksheet.getId().equals(sheetID)) {
+				return worksheet;
+			}
+		}
+		throw new IllegalStateException(
+				"You don't have access to a spreadsheet with key " + sheetID);
+	}
+	/**
+	 * Returns the Book with the given key.
+	 *
+	 * @throws IOException
+	 *             If a network error occurs while trying to communicate with
+	 *             Spreadsheets
+	 * @throws ServiceException
+	 *             If an application-level protocol error occurs while trying to
+	 *             communicate with Spreadsheets
+	 */
+	private static SpreadsheetEntry getBookWithID(String bookID,
+			SpreadsheetService spreadsheetService) throws IOException,
+			ServiceException {
+		URL metafeedUrl = new URL(
+				"http://spreadsheets.google.com/feeds/spreadsheets/private/full");
+		SpreadsheetFeed spreadsheetFeed = spreadsheetService.getFeed(
+				metafeedUrl, SpreadsheetFeed.class);
 
-//	  SpreadsheetService service =   new SpreadsheetService("MySpreadsheetIntegration-v1");
-//
-//      // TODO: Authorize the service object for a specific user (see other sections)
-//      String USERNAME = "passchip514@gmail.com";
-//      String PASSWORD = "gocyclone";
-//
-//      service.setUserCredentials(USERNAME, PASSWORD);
-//
-//    // TODO: Authorize the service object for a specific user (see other sections)
-//
-//    // Define the URL to request.  This should never change.
-//    URL SPREADSHEET_FEED_URL = new URL(
-//        "https://spreadsheets.google.com/feeds/spreadsheets/private/full");
-//
-//    // Make a request to the API and get all spreadsheets.
-//    SpreadsheetFeed feed = service.getFeed(SPREADSHEET_FEED_URL,
-//        SpreadsheetFeed.class);
-//    List<SpreadsheetEntry> spreadsheets = feed.getEntries();
-//
-//    if (spreadsheets.size() == 0) {
-//      // TODO: There were no spreadsheets, act accordingly.
-//    }
-//
-//    // TODO: Choose a spreadsheet more intelligently based on your
-//    // app's needs.
-//    SpreadsheetEntry spreadsheet = spreadsheets.get(0);
-//    System.out.println(spreadsheet.getTitle().getPlainText());
-//
-//    // Get the first worksheet of the first spreadsheet.
-//    // TODO: Choose a worksheet more intelligently based on your
-//    // app's needs.
-//    WorksheetFeed worksheetFeed = service.getFeed(
-//        spreadsheet.getWorksheetFeedUrl(), WorksheetFeed.class);
-//    List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
-//    WorksheetEntry worksheet = worksheets.get(0);
-//
-//    // Fetch the list feed of the worksheet.
-//    URL listFeedUrl = worksheet.getListFeedUrl();
-//    ListFeed listFeed = service.getFeed(listFeedUrl, ListFeed.class);
-//
-//    // Create a local representation of the new row.
-//    ListEntry row = new ListEntry();
-//    row.getCustomElements().setValueLocal("SiteID", "www.facebook.com");
-//    row.getCustomElements().setValueLocal("Username", "Smith");
-//    row.getCustomElements().setValueLocal("Password", "27");
-//   
-//    
-//   
-//
-//    // Send the new row to the API for insertion.
-//    row = service.insert(listFeedUrl, row);
-
-  }
+		List<SpreadsheetEntry> spreadsheets = spreadsheetFeed.getEntries();
+		for (SpreadsheetEntry spreadsheet : spreadsheets) {
+			if (spreadsheet.getKey().equals(bookID)) {
+				return spreadsheet;
+			}
+		}
+		throw new IllegalStateException(
+				"You don't have access to a spreadsheet with key " + bookID);
+	}
 }
