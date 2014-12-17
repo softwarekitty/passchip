@@ -12,7 +12,12 @@
 <title>Setup user</title>
 </head>
 <body>
-<%String chipID=request.getParameter("ID"); 
+<%
+String chipID;
+if(request.getParameter("ID")==null)
+chipID=(String)request.getAttribute("ID");
+else
+chipID=request.getParameter("ID"); 
 DatastoreInteraction d = new DatastoreInteraction();
 List<Entity> result=d.getCommunities();
 ArrayList<String> name=new ArrayList<String>(); 
@@ -22,10 +27,15 @@ for(int i=0;i<result.size();i++)
 	System.out.println(result.get(i).getProperty("communityName").toString());
 }
 request.setAttribute("name",name );
+//request.setAttribute("ID",chipID);
 %>
 <p> Setting up user for the Chip ID <%=chipID %></p>
 
-<p> Select a community from the list or setup a new community using the link <a href="/setupcommunity.jsp" >Setup Community</a> </p>
+<p> Select a community from the list or setup a new community using </p>
+<form action="/SetupCommunity.jsp" method="post"> 
+<input type="hidden" name="ID" value="<%=chipID%>">
+ <input type="submit" value="Setup new Community">
+</form>  
 <form action="/SetupUser" method="post">
  <select name="community">
     <c:forEach var="line" items="${name}">

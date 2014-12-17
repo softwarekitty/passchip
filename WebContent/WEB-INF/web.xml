@@ -13,14 +13,8 @@
     <servlet-name>passchip</servlet-name>
     <url-pattern>/passchip</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>idtest</servlet-name>
-    <servlet-class>com.appspot.passchip_service.WorksheetIDGettingServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>idtest</servlet-name>
-    <url-pattern>/idtest</url-pattern>
-  </servlet-mapping>
+
+  
   <servlet>
     <servlet-name>YalinServlet</servlet-name>
     <servlet-class>com.appspot.passchip_service.YalinServlet</servlet-class>

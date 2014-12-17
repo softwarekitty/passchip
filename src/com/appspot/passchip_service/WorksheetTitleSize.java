@@ -52,6 +52,8 @@ public class WorksheetTitleSize {
         spreadsheet.getWorksheetFeedUrl(), WorksheetFeed.class);
     List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
     WorksheetEntry worksheet = worksheets.get(0);
+    
+    String y = worksheet.getId();
     System.out.println(worksheet.getId());
 
     // Update the local representation of the worksheet.
