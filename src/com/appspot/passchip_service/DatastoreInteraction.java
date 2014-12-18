@@ -56,8 +56,9 @@ public class DatastoreInteraction {
 	}
 	
 	//setup a new user
-	public String createUser(String chipID,long communityID, String sheetID, int flag)
+	public String createUser(String chipID, String communityname, String sheetID, int flag)
 	{
+		long communityID = getcommunityID(communityname);
 		Entity chipUser=new Entity("chipUser",chipID);
 		chipUser.setProperty("communityID", communityID);
 		chipUser.setProperty("sheetID",sheetID);
@@ -82,6 +83,14 @@ public class DatastoreInteraction {
 		return 1;
 		
 		
+	}
+	
+	public Entity getCommunity(String communityname) throws EntityNotFoundException{
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		Long communityID = new Long(getcommunityID(communityname));
+		Key createdKey = KeyFactory.createKey("Community", communityID);
+		return datastore.get(createdKey);
 	}
 	
 	
