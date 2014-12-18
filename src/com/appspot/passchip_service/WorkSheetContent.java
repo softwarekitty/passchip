@@ -5,7 +5,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gdata.client.spreadsheet.CellQuery;
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.spreadsheet.CellEntry;
 import com.google.gdata.data.spreadsheet.CellFeed;
 import com.google.gdata.data.spreadsheet.ListEntry;
 import com.google.gdata.data.spreadsheet.ListFeed;
@@ -31,18 +33,27 @@ public class WorkSheetContent {
 
 		WorksheetEntry worksheet = getSheetWithID(sheetID, worksheetFeed);
 
-		URL cellFeedUrl = worksheet.getCellFeedUrl();
-		CellFeed cellFeed = spreadsheetService.getFeed(cellFeedUrl,
-				CellFeed.class);
+//		URL cellFeedUrl = worksheet.getCellFeedUrl();
+//		CellFeed cellFeed = spreadsheetService.getFeed(cellFeedUrl,
+//				CellFeed.class);
+//		cellFeed = spreadsheetService.getFeed(cellFeedUrl, CellFeed.class);
+//		cellFeed.insert(new CellEntry(1, 1, "abc"));
+		
+		
+		
+
+
 
 		 // Create a local representation of the new row.
 		URL listFeedUrl = worksheet.getListFeedUrl();
 	    ListFeed listFeed = spreadsheetService.getFeed(listFeedUrl, ListFeed.class);
 
+
 		 List<UserEntry> lists = new ArrayList<UserEntry>();
 		 for(int i = 0; i < listFeed.getEntries().size(); i++){
 			 ListEntry entry = listFeed.getEntries().get(i);
 			 UserEntry d = new UserEntry();
+			 //entry.get
 			 d.website = entry.getCustomElements().getValue("SiteId");
 			 d.usr = entry.getCustomElements().getValue("Username");
 			 d.password = entry.getCustomElements().getValue("Password");

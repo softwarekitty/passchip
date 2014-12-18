@@ -1,16 +1,11 @@
 package com.appspot.passchip_service;
 
-import com.google.common.collect.Maps;
-import com.google.gdata.data.docs.DocumentListEntry;
-import com.google.gdata.data.media.MediaEntry;
-import com.google.gdata.data.extensions.QuotaBytesTotal;
-
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.Content;
 import com.google.gdata.data.spreadsheet.CellFeed;
 import com.google.gdata.data.spreadsheet.ListEntry;
 import com.google.gdata.data.spreadsheet.ListFeed;
@@ -18,7 +13,6 @@ import com.google.gdata.data.spreadsheet.SpreadsheetEntry;
 import com.google.gdata.data.spreadsheet.SpreadsheetFeed;
 import com.google.gdata.data.spreadsheet.WorksheetEntry;
 import com.google.gdata.data.spreadsheet.WorksheetFeed;
-import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
 public class AddListRow {
@@ -46,9 +40,12 @@ public class AddListRow {
 
 	    // Create a local representation of the new row.
 	    ListEntry row = new ListEntry();
+	    
+	    
 	    row.getCustomElements().setValueLocal("SiteID", website);
 	    row.getCustomElements().setValueLocal("Username", usr);
 	    row.getCustomElements().setValueLocal("Password", password);
+	    //row.
 	   
 	    
 	   

@@ -18,11 +18,12 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
 import com.google.gdata.data.PlainTextConstruct;
+import com.google.gdata.data.spreadsheet.CellEntry;
+import com.google.gdata.data.spreadsheet.CellFeed;
 import com.google.gdata.data.spreadsheet.SpreadsheetEntry;
 import com.google.gdata.data.spreadsheet.SpreadsheetFeed;
 import com.google.gdata.data.spreadsheet.WorksheetEntry;
 import com.google.gdata.data.spreadsheet.WorksheetFeed;
-import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
 /**
@@ -92,7 +93,6 @@ public class SetupUser extends HttpServlet {
 			newWorksheet.setTitle(new PlainTextConstruct(chipID));
 			newWorksheet.setColCount(3);
 			newWorksheet.setRowCount(20);	
-			
 			URL worksheetFeedUrl = spreadsheet.getWorksheetFeedUrl();
 			spreadsheetService.insert(worksheetFeedUrl, newWorksheet);
 		
@@ -104,6 +104,19 @@ public class SetupUser extends HttpServlet {
 				String sm = worksheet.getTitle().getPlainText();
 				if (sm.toString().equals(chipID)){
 					System.out.println("ID: " + worksheet.getId());
+					
+					URL cellFeedUrl = worksheet.getCellFeedUrl();
+					CellFeed cellFeed = spreadsheetService.getFeed(cellFeedUrl,
+							CellFeed.class);
+					cellFeed.insert(new CellEntry(1, 1, "SiteId"));
+					cellFeed.insert(new CellEntry(1, 2, "Username"));
+					cellFeed.insert(new CellEntry(1, 3, "Password"));
+//					cellFeed.get
+//
+//					 // Create a local representation of the new row.
+//					URL listFeedUrl = worksheet.getListFeedUrl();
+//				    ListFeed listFeed = spreadsheetService.getFeed(listFeedUrl, ListFeed.class);
+//				    listFeed.getEntries().get(0).set
 					usersheetID=worksheet.getId();
 				}
 			}				
