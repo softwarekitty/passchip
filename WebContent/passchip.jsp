@@ -36,7 +36,7 @@
 <p>Or you can use your paid-support credits to <a href="#">contact us</a></p>
 <p>...</p>
 <p>For Dev, we can go to a page that uses post. <button type="button" onclick=launch("postgen")>Go to Post Page</button></p>
-
+<p><a href="https://passchipisu514.appspot.com">Pasship description</a></p>
 <%-- we have a valid ID value.  we should do the following things: --%>
 <%-- 1. try to find the community associated with the ID --%>
 <%
