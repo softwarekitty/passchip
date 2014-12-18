@@ -147,7 +147,7 @@ function addRow(){
 
 	</tr>
 	<%
-		/* String bookId = request.getAttribute("bookID").toString();
+		String bookId = request.getAttribute("bookID").toString();
 		String sheetId = request.getAttribute("sheetID").toString();
 		String username = request.getAttribute("username").toString();
 		String pass = request.getAttribute("password").toString();
@@ -155,11 +155,11 @@ function addRow(){
  		String PASSWORD = pass;
 		String bookID = bookId;
 		String sheetID = sheetId;
-		String USERNAME = username;  */
-   		String USERNAME = "passchip514@gmail.com";
+		String USERNAME = username; 
+   		/* String USERNAME = "passchip514@gmail.com";
 		String PASSWORD = "gocyclone";
 		String bookID = "19DrRtox3c3n5Hyo9dsa9PKq2IZmWdxf2jt2yK2EtZpU";
-		String sheetID = "https://docs.google.com/feeds/id/spreadsheet%3A19DrRtox3c3n5Hyo9dsa9PKq2IZmWdxf2jt2yK2EtZpU"; 
+		String sheetID = "https://docs.google.com/feeds/id/spreadsheet%3A19DrRtox3c3n5Hyo9dsa9PKq2IZmWdxf2jt2yK2EtZpU";  */
 		List<UserEntry> list = WorkSheetContent.getSheetContent(USERNAME, PASSWORD, bookID, sheetID);
 		String html = "";
 		for(int i = 0; i < list.size(); i++){

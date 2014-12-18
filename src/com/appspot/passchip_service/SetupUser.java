@@ -103,23 +103,31 @@ public class SetupUser extends HttpServlet {
 				
 				String sm = worksheet.getTitle().getPlainText();
 				if (sm.toString().equals(chipID)){
-					System.out.println("ID: " + worksheet.getId());
-					
-					URL cellFeedUrl = worksheet.getCellFeedUrl();
-					CellFeed cellFeed = spreadsheetService.getFeed(cellFeedUrl,
-							CellFeed.class);
-					cellFeed.insert(new CellEntry(1, 1, "SiteId"));
-					cellFeed.insert(new CellEntry(1, 2, "Username"));
-					cellFeed.insert(new CellEntry(1, 3, "Password"));
-//					cellFeed.get
-//
-//					 // Create a local representation of the new row.
-//					URL listFeedUrl = worksheet.getListFeedUrl();
-//				    ListFeed listFeed = spreadsheetService.getFeed(listFeedUrl, ListFeed.class);
-//				    listFeed.getEntries().get(0).set
+//					System.out.println("ID: " + worksheet.getId());
+//					
+//					URL cellFeedUrl = worksheet.getCellFeedUrl();
+//					CellFeed cellFeed = spreadsheetService.getFeed(cellFeedUrl,
+//							CellFeed.class);
+//					cellFeed.insert(new CellEntry(1, 1, "SiteId"));
+//					cellFeed.insert(new CellEntry(1, 2, "Username"));
+//					cellFeed.insert(new CellEntry(1, 3, "Password"));
 					usersheetID=worksheet.getId();
 				}
-			}				
+			}	
+			System.out.println("usersheetID:" + usersheetID);
+			WorksheetEntry newUserSheet = getSheetWithID(usersheetID, worksheetFeed);
+			// Write header line into Spreadsheet
+			URL cellFeedUrl = newUserSheet.getCellFeedUrl();
+			CellFeed cellFeed = spreadsheetService.getFeed(cellFeedUrl,
+					CellFeed.class);
+
+			CellEntry cellEntry1 = new CellEntry(1, 1, "SiteId");
+			cellFeed.insert(cellEntry1);
+			CellEntry cellEntry2 = new CellEntry(1, 2, "Username");
+			cellFeed.insert(cellEntry2);
+			CellEntry cellEntry3 = new CellEntry(1, 3, "Password");
+			cellFeed.insert(cellEntry3);
+			System.out.println("added cell headers for sheet with title: " + chipID);
 
 			//
 
@@ -153,6 +161,28 @@ public class SetupUser extends HttpServlet {
 		}
 		throw new IllegalStateException(
 				"You don't have access to a spreadsheet with key " + key);
+	}
+	
+	/**
+	 * Returns the Sheet with the given key.
+	 * 
+	 * @throws IOException
+	 *             If a network error occurs while trying to communicate with
+	 *             Spreadsheets
+	 * @throws ServiceException
+	 *             If an application-level protocol error occurs while trying to
+	 *             communicate with Spreadsheets
+	 */
+	private static WorksheetEntry getSheetWithID(String sheetID,
+			WorksheetFeed worksheetFeed) throws IOException, ServiceException {
+		List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
+		for (WorksheetEntry worksheet : worksheets) {
+			if (worksheet.getId().equals(sheetID)) {
+				return worksheet;
+			}
+		}
+		throw new IllegalStateException(
+				"You don't have access to a spreadsheet with key " + sheetID);
 	}
 
 }
