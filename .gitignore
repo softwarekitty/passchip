@@ -7,5 +7,7 @@
 !*.jsp
 !*.java
 !/lib/*.jar
+!*.pdf
+!*.md
 !/WebContent/WEB-INF/lib/*.jar
 !/WebContent/WEB-INF/web.xml

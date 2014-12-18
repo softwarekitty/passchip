@@ -8,6 +8,5 @@
 ID: <input type="text" value="12345" name="ID">
 <input type="submit" value="Submit">
 </form>
-<p>(for testing, pretend that the ID 12345 exists in the system)</p>
 </body>
 </html>

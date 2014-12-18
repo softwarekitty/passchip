@@ -1,7 +1,6 @@
 package com.appspot.passchip_service;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -11,12 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.spreadsheet.CellEntry;
@@ -71,27 +66,34 @@ public class SetupUser extends HttpServlet {
 			// TODO react to this problem
 			e.printStackTrace();
 		}
-		
-		
-		
+
 		String usersheetID = null;
-		try {
-			usersheetID = createUserWorksheet(spreadsheetService, bookID, chipID);
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while(usersheetID==null){
+			try {
+				usersheetID = createUserWorksheet(spreadsheetService, bookID,
+						chipID);
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
-		//create the user entry in the datastore
+
+		// create the user entry in the datastore
 		DatastoreInteraction d = new DatastoreInteraction();
-		d.createUser(chipID,communityname, usersheetID, 1);
+		d.createUser(chipID, communityname, usersheetID, 1);
+
+		System.out.println("SetupUser - username: " + username);
+		System.out.println("SetupUser - password: " + pswd);
+		System.out.println("SetupUser - bookID: " + bookID);
+		System.out.println("SetupUser - sheetID: " + usersheetID);
 
 		request.setAttribute("username", username);
 		request.setAttribute("password", pswd);
 		request.setAttribute("bookID", bookID);
 		request.setAttribute("chipID", chipID);
 		request.setAttribute("sheetID", usersheetID);
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/ui.jsp");
 		rd.forward(request, response);
 	}
@@ -105,36 +107,55 @@ public class SetupUser extends HttpServlet {
 			SpreadsheetService spreadsheetService, String bookID, String chipID)
 			throws IOException, ServiceException {
 
-		//get the book
+		// get the book
 		SpreadsheetEntry communityBook = getBookWithID(bookID,
 				spreadsheetService);
 
-		//construct model of empty worksheet
+		// construct model of empty worksheet
 		WorksheetEntry newWorksheet = new WorksheetEntry();
 		newWorksheet.setTitle(new PlainTextConstruct(chipID));
 		newWorksheet.setColCount(3);
 		newWorksheet.setRowCount(20);
-
-		//insert new worksheet via service
-		URL worksheetFeedUrl = communityBook.getWorksheetFeedUrl();
-		spreadsheetService.insert(worksheetFeedUrl, newWorksheet);
-
-		//get feed of worksheets
-		WorksheetFeed worksheetFeed = spreadsheetService.getFeed(
-				worksheetFeedUrl, WorksheetFeed.class);
-		String worksheetID = getWorksheetIDFromTitle(worksheetFeed, chipID);
 		
-		addWorksheetHeaders(spreadsheetService,worksheetFeed, worksheetID);
-		return worksheetID;
+		
+		while (true) {
+			try {
+				// insert new worksheet via service
+				URL worksheetFeedUrl = communityBook.getWorksheetFeedUrl();
+				spreadsheetService.insert(worksheetFeedUrl, newWorksheet);
+				System.out.println("success inserting worksheet with title: " + chipID);
+				break;
+			} catch (Exception e) {
+				System.out.println("problems creating worksheet: " + e.getMessage());
+				e.printStackTrace();
+			}
+		}
 
+
+		while (true) {
+			try {
+
+				// get feed of worksheets
+				URL worksheetFeedUrl = communityBook.getWorksheetFeedUrl();
+				WorksheetFeed worksheetFeed = spreadsheetService.getFeed(
+						worksheetFeedUrl, WorksheetFeed.class);
+				String worksheetID = getWorksheetIDFromTitle(worksheetFeed, chipID);
+				addWorksheetHeaders(spreadsheetService, worksheetFeed,
+						worksheetID);
+				return worksheetID;
+			} catch (Exception e) {
+				System.out.println("problems putting headers on worksheet: " + e.getMessage());
+			}
+		}
 	}
-	
-	private static void addWorksheetHeaders(SpreadsheetService spreadsheetService, WorksheetFeed worksheetFeed,
+
+	private static void addWorksheetHeaders(
+			SpreadsheetService spreadsheetService, WorksheetFeed worksheetFeed,
 			String worksheetID) throws IOException, ServiceException {
 
 		WorksheetEntry newUserSheet = getSheetWithID(worksheetID, worksheetFeed);
 		// Write header line into Spreadsheet
-		
+
 		URL cellFeedUrl = newUserSheet.getCellFeedUrl();
 		CellFeed cellFeed = spreadsheetService.getFeed(cellFeedUrl,
 				CellFeed.class);
@@ -145,10 +166,12 @@ public class SetupUser extends HttpServlet {
 		cellFeed.insert(cellEntry2);
 		CellEntry cellEntry3 = new CellEntry(1, 3, "Password");
 		cellFeed.insert(cellEntry3);
+		System.out.println("success creating worksheet headers for " + worksheetID);
 	}
 
-	private static String getWorksheetIDFromTitle(WorksheetFeed worksheetFeed, String title){
-		//find id of first sheet with matching title
+	private static String getWorksheetIDFromTitle(WorksheetFeed worksheetFeed,
+			String title) {
+		// find id of first sheet with matching title
 		List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
 		for (WorksheetEntry worksheet : worksheets) {
 

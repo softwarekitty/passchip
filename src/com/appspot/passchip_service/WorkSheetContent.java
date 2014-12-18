@@ -23,13 +23,21 @@ public class WorkSheetContent {
 	public static List<UserEntry> getSheetContent(String USERNAME, String PASSWORD, String bookID, String sheetID) throws IOException,
 			ServiceException {
 
-
+		System.out.println("getting Sheet content with username: " + USERNAME + " password: " + PASSWORD + " bookID: " + bookID + " sheetID: " + sheetID);
 		SpreadsheetService spreadsheetService = new SpreadsheetService(APP_NAME);
 		spreadsheetService.setUserCredentials(USERNAME, PASSWORD);
 		SpreadsheetEntry spreadsheet = getBookWithID(bookID, spreadsheetService);
 
-		WorksheetFeed worksheetFeed = spreadsheetService.getFeed(
-				spreadsheet.getWorksheetFeedUrl(), WorksheetFeed.class);
+		WorksheetFeed worksheetFeed = null;
+		while(worksheetFeed==null){
+			try{
+			worksheetFeed = spreadsheetService.getFeed(
+					spreadsheet.getWorksheetFeedUrl(), WorksheetFeed.class);
+			}catch(Exception e){
+				System.out.println("trouble getting worksheetFeed: "+ e.getMessage());
+			}
+		}
+				
 
 		WorksheetEntry worksheet = getSheetWithID(sheetID, worksheetFeed);
 
